@@ -1,533 +1,1226 @@
-index.html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Parseldunya | 10.000 Parsellik Dijital Dünya</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Parseldunya | Dijital Dünya</title>
 
 <style>
 *{
     box-sizing:border-box;
+}
+
+html,body{
     margin:0;
-    padding:0;
-}
-
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    background:#07111f;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#02060d;
     color:white;
+    font-family:Arial,sans-serif;
 }
 
-header{
-    position:sticky;
-    top:0;
+#app{
+    position:fixed;
+    inset:0;
+}
+
+canvas{
+    display:block;
+}
+
+/* ÜST MENÜ */
+
+.top{
+    position:fixed;
     z-index:10;
-    background:#0b192b;
-    border-bottom:1px solid #243951;
-}
+    top:0;
+    left:0;
+    right:0;
+    height:75px;
+    padding:0 25px;
 
-.nav{
-    max-width:1200px;
-    margin:auto;
-    padding:16px 20px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+
+    background:
+        linear-gradient(
+            #02060de8,
+            transparent
+        );
+
+    pointer-events:none;
 }
 
 .logo{
-    font-size:24px;
+    font-size:25px;
     font-weight:900;
+    pointer-events:auto;
 }
 
 .logo span{
-    color:#48d7ff;
+    color:#35dcff;
 }
 
-.btn{
-    border:0;
-    border-radius:12px;
+.menu{
+    pointer-events:auto;
+}
+
+.menu a{
+    display:inline-block;
     padding:12px 18px;
-    font-weight:bold;
-    cursor:pointer;
+
+    border-radius:12px;
+
+    background:#35dcff;
+    color:#031018;
+
+    text-decoration:none;
+    font-weight:800;
 }
 
-.primary{
-    background:#48d7ff;
-    color:#06101b;
+/* ALT BİLGİ */
+
+.info{
+    position:fixed;
+    z-index:10;
+
+    left:22px;
+    bottom:22px;
+
+    width:390px;
+    max-width:calc(100% - 44px);
+
+    padding:20px;
+
+    border-radius:20px;
+
+    background:#071321e8;
+    border:1px solid #ffffff18;
+
+    backdrop-filter:blur(16px);
 }
 
-.secondary{
-    background:#162a42;
-    color:white;
-    border:1px solid #304863;
+.info h1{
+    margin:0 0 8px;
+    font-size:24px;
 }
 
-.hero{
-    max-width:1200px;
-    margin:auto;
-    padding:60px 20px;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:40px;
-    align-items:center;
-}
-
-.badge{
-    color:#48d7ff;
-    font-weight:bold;
-    margin-bottom:15px;
-}
-
-h1{
-    font-size:clamp(42px,7vw,78px);
-    line-height:.95;
-    margin-bottom:22px;
-}
-
-.hero p{
-    color:#aebbd0;
-    font-size:18px;
-    line-height:1.6;
-}
-
-.buttons{
-    display:flex;
-    gap:10px;
-    margin-top:25px;
-    flex-wrap:wrap;
-}
-
-.world{
-    height:350px;
-    border-radius:50%;
-    background:
-    radial-gradient(circle at 35% 30%,
-    #7aeaff,
-    #1c8bbd 35%,
-    #125078 55%,
-    #07111f 72%);
-    box-shadow:
-    0 0 80px #35d7ff55,
-    inset -40px -30px 80px #0009;
+.info p{
+    margin:0;
+    color:#9baabd;
+    line-height:1.55;
 }
 
 .stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:12px;
-    margin-top:30px;
+    display:flex;
+    gap:8px;
+    margin-top:15px;
 }
 
 .stat{
-    background:#0d1e32;
-    border:1px solid #263c55;
-    border-radius:15px;
-    padding:18px;
+    flex:1;
+    padding:11px;
+
+    border-radius:12px;
+
+    background:#ffffff08;
 }
 
 .stat strong{
     display:block;
-    font-size:25px;
+    font-size:19px;
 }
 
 .stat small{
-    color:#8fa1b8;
+    color:#77889e;
 }
 
-.section{
-    max-width:1200px;
-    margin:auto;
-    padding:30px 20px 70px;
-}
+/* KONTROL */
 
-.section h2{
-    font-size:34px;
-    margin-bottom:8px;
-}
-
-.description{
-    color:#8fa1b8;
-    margin-bottom:20px;
-}
-
-.search{
-    width:100%;
-    padding:15px;
-    border-radius:12px;
-    border:1px solid #304863;
-    background:#0d1e32;
-    color:white;
-    margin:20px 0;
-    font-size:16px;
-}
-
-.parcel-grid{
-    display:grid;
-    grid-template-columns:repeat(20,1fr);
-    gap:4px;
-    background:#091727;
-    padding:10px;
-    border-radius:18px;
-    border:1px solid #263c55;
-}
-
-.parcel{
-    aspect-ratio:1;
-    border:1px solid #2b4968;
-    background:#12304b;
-    border-radius:4px;
-    cursor:pointer;
-}
-
-.parcel:hover{
-    background:#48d7ff;
-    transform:scale(1.15);
-    z-index:2;
-}
-
-.parcel.sold{
-    background:#21647a;
-}
-
-.modal{
-    display:none;
+.help{
     position:fixed;
-    inset:0;
-    background:#000b;
-    z-index:100;
-    align-items:center;
-    justify-content:center;
+    z-index:10;
+
+    right:22px;
+    bottom:22px;
+
+    padding:12px 15px;
+
+    border-radius:12px;
+
+    background:#071321dd;
+
+    color:#94a4b8;
+
+    font-size:12px;
+}
+
+/* PARSEL BİLGİ */
+
+.parcel-card{
+    position:fixed;
+    z-index:20;
+
+    display:none;
+
+    top:95px;
+    right:22px;
+
+    width:310px;
+    max-width:calc(100% - 44px);
+
     padding:20px;
+
+    border-radius:18px;
+
+    background:#071321f5;
+    border:1px solid #35dcff55;
+
+    backdrop-filter:blur(16px);
 }
 
-.modal.active{
-    display:flex;
+.parcel-card.active{
+    display:block;
 }
 
-.modal-box{
-    width:100%;
-    max-width:450px;
-    background:#0d1e32;
-    border:1px solid #304863;
-    border-radius:20px;
-    padding:25px;
+.parcel-card h2{
+    margin:0 0 8px;
 }
 
-.modal-box h2{
-    margin:10px 0;
-}
-
-.modal-box p{
-    color:#aebbd0;
-    line-height:1.6;
-    margin-bottom:20px;
+.parcel-card p{
+    color:#9baabd;
+    line-height:1.5;
 }
 
 .close{
     float:right;
+
     background:none;
     border:0;
+
     color:white;
-    font-size:25px;
+
+    font-size:24px;
+
     cursor:pointer;
 }
 
-footer{
-    border-top:1px solid #263c55;
+.parcel-link{
+    display:block;
+
     text-align:center;
-    padding:25px;
-    color:#8193aa;
+
+    padding:12px;
+
+    border-radius:11px;
+
+    background:#35dcff;
+
+    color:#031018;
+
+    text-decoration:none;
+
+    font-weight:800;
 }
 
-@media(max-width:800px){
+/* LEJANT */
 
-    .hero{
-        grid-template-columns:1fr;
-        padding-top:40px;
+.legend{
+    position:fixed;
+    z-index:10;
+
+    top:90px;
+    left:22px;
+
+    padding:12px 15px;
+
+    border-radius:13px;
+
+    background:#071321dd;
+
+    color:#9baabd;
+
+    font-size:12px;
+}
+
+.dot{
+    display:inline-block;
+
+    width:8px;
+    height:8px;
+
+    margin-right:5px;
+
+    border-radius:50%;
+}
+
+.free{
+    background:#35dcff;
+}
+
+.premium{
+    background:#ffd34d;
+}
+
+.owned{
+    background:#50e58a;
+}
+
+
+/* MOBİL */
+
+@media(max-width:650px){
+
+    .top{
+        height:65px;
+        padding:0 14px;
     }
 
-    .world{
-        height:240px;
+    .logo{
+        font-size:20px;
     }
 
-    .parcel-grid{
-        grid-template-columns:repeat(10,1fr);
+    .legend{
+        top:75px;
+        left:12px;
     }
 
-    .stats{
-        grid-template-columns:1fr 1fr;
+    .help{
+        display:none;
     }
 
-    .stat:last-child{
-        grid-column:1/-1;
+    .info{
+        left:12px;
+        right:12px;
+        bottom:12px;
+
+        width:auto;
+        max-width:none;
+    }
+
+    .parcel-card{
+        top:auto;
+        right:12px;
+        left:12px;
+        bottom:12px;
+        width:auto;
+        max-width:none;
     }
 }
 </style>
 </head>
 
+
 <body>
 
-<header>
-    <div class="nav">
-        <div class="logo">
-            Parsel<span>dunya</span>
-        </div>
+<div id="app"></div>
 
-        <button class="btn secondary"
-        onclick="document.getElementById('parseller').scrollIntoView({behavior:'smooth'})">
+
+<!-- ÜST MENÜ -->
+
+<div class="top">
+
+    <div class="logo">
+        Parsel<span>dunya</span>
+    </div>
+
+    <div class="menu">
+
+        <a href="parseller.html">
             Parseller
-        </button>
-    </div>
-</header>
-
-
-<section class="hero">
-
-    <div>
-
-        <div class="badge">
-            🌍 10.000 PARSELLİK DİJİTAL DÜNYA
-        </div>
-
-        <h1>
-            Dünyada kendi yerini al.
-        </h1>
-
-        <p>
-            Dijital dünyadaki parselini seç.
-            Markanı, işletmeni veya projenı görünür
-            hale getir.
-        </p>
-
-        <div class="buttons">
-
-            <button class="btn primary"
-            onclick="document.getElementById('parseller').scrollIntoView({behavior:'smooth'})">
-                🌍 Parsel Seç
-            </button>
-
-            <button class="btn secondary"
-            onclick="nasılCalisir()">
-                Nasıl çalışır?
-            </button>
-
-        </div>
-
-        <div class="stats">
-
-            <div class="stat">
-                <strong>10.000</strong>
-                <small>Toplam Parsel</small>
-            </div>
-
-            <div class="stat">
-                <strong id="dolu">10</strong>
-                <small>Dolu</small>
-            </div>
-
-            <div class="stat">
-                <strong id="bos">9.990</strong>
-                <small>Müsait</small>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="world"></div>
-
-</section>
-
-
-<section class="section" id="parseller">
-
-    <h2>10.000 Parsellik Dünya</h2>
-
-    <p class="description">
-        Bir parsel seçerek ayrıntılarını görüntüle.
-    </p>
-
-    <input
-        class="search"
-        id="arama"
-        type="number"
-        placeholder="Parsel numarası ara..."
-        oninput="ara()"
-    >
-
-    <div class="parcel-grid" id="grid"></div>
-
-</section>
-
-
-<div class="modal" id="modal">
-
-    <div class="modal-box">
-
-        <button class="close" onclick="kapat()">×</button>
-
-        <h2 id="baslik">
-            Parsel #1
-        </h2>
-
-        <p id="bilgi">
-            Bu parsel müsait.
-            Marka veya işletme alanı olarak
-            kullanılabilir.
-        </p>
-
-        <button class="btn primary"
-        onclick="talepEt()">
-            Parseli Talep Et
-        </button>
+        </a>
 
     </div>
 
 </div>
 
 
-<footer>
-    © 2026 Parseldunya — 10.000 Parsellik Dijital Dünya
-</footer>
+<!-- LEJANT -->
+
+<div class="legend">
+
+    <span>
+        <i class="dot free"></i>
+        Müsait
+    </span>
+
+    &nbsp;&nbsp;
+
+    <span>
+        <i class="dot premium"></i>
+        Premium
+    </span>
+
+    &nbsp;&nbsp;
+
+    <span>
+        <i class="dot owned"></i>
+        Sahipli
+    </span>
+
+</div>
+
+
+<!-- BİLGİ -->
+
+<div class="info">
+
+    <h1>
+        🌍 10.000 Parsellik Dijital Dünya
+    </h1>
+
+    <p>
+        Dünyayı mouse ile çevir,
+        yakınlaştır ve üzerindeki
+        dijital parselleri keşfet.
+    </p>
+
+    <div class="stats">
+
+        <div class="stat">
+            <strong>10.000</strong>
+            <small>Toplam</small>
+        </div>
+
+        <div class="stat">
+            <strong>9.990</strong>
+            <small>Müsait</small>
+        </div>
+
+        <div class="stat">
+            <strong>10</strong>
+            <small>Sahipli</small>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="help">
+    🖱️ Sürükle: Döndür
+    &nbsp; • &nbsp;
+    🔍 Tekerlek: Yakınlaştır
+</div>
+
+
+<!-- PARSEL KARTI -->
+
+<div
+    id="parcelCard"
+    class="parcel-card">
+
+    <button
+        class="close"
+        onclick="closeParcel()">
+
+        ×
+
+    </button>
+
+    <h2 id="parcelTitle">
+        Parsel #1
+    </h2>
+
+    <p id="parcelDescription"></p>
+
+    <a
+        class="parcel-link"
+        href="parseller.html">
+
+        Parselleri Gör
+
+    </a>
+
+</div>
+
+
+<!-- THREE.JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
 
 <script>
 
-const grid = document.getElementById("grid");
+/* =====================================
+   SAHNE
+===================================== */
 
-const doluParseller = new Set([
-    17,
-    48,
-    126,
-    321,
-    777,
-    1024,
-    2500,
-    5000,
-    7777,
-    9999
-]);
+const app =
+    document.getElementById("app");
 
 
-function parselleriOlustur(){
-
-    const fragment = document.createDocumentFragment();
-
-    for(let i = 1; i <= 10000; i++){
-
-        const parsel = document.createElement("button");
-
-        parsel.className = "parcel";
-
-        parsel.dataset.id = i;
-
-        parsel.title = "Parsel #" + i;
-
-        if(doluParseller.has(i)){
-            parsel.classList.add("sold");
-        }
-
-        parsel.onclick = function(){
-            parselAc(i);
-        };
-
-        fragment.appendChild(parsel);
-    }
-
-    grid.appendChild(fragment);
-}
+const scene =
+    new THREE.Scene();
 
 
-function parselAc(id){
-
-    document.getElementById("baslik").textContent =
-        "Parsel #" + id;
-
-    if(doluParseller.has(id)){
-
-        document.getElementById("bilgi").textContent =
-            "Bu parsel şu anda dolu olarak işaretlenmiş.";
-
-    }else{
-
-        document.getElementById("bilgi").textContent =
-            "Bu parsel şu anda müsait. Marka, işletme veya reklam alanı olarak değerlendirilebilir.";
-
-    }
-
-    document.getElementById("modal")
-        .classList.add("active");
-}
-
-
-function kapat(){
-
-    document.getElementById("modal")
-        .classList.remove("active");
-}
-
-
-function talepEt(){
-
-    alert(
-        "Parsel talep sistemi bir sonraki aşamada ödeme ve üyelik sistemiyle bağlanacak."
+const camera =
+    new THREE.PerspectiveCamera(
+        42,
+        window.innerWidth /
+        window.innerHeight,
+        0.1,
+        100
     );
 
-}
+
+camera.position.z = 3;
 
 
-function nasılCalisir(){
+/* =====================================
+   RENDER
+===================================== */
 
-    alert(
-        "1. Bir parsel seç.\n\n" +
-        "2. Parselini talep et.\n\n" +
-        "3. Marka veya işletme bilgilerini oluştur.\n\n" +
-        "4. Ödeme sistemi bağlandığında satın alma işlemini tamamla."
+const renderer =
+    new THREE.WebGLRenderer({
+        antialias:true,
+        alpha:true
+    });
+
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio,
+        2
+    )
+);
+
+
+renderer.setSize(
+    window.innerWidth,
+    window.innerHeight
+);
+
+
+app.appendChild(
+    renderer.domElement
+);
+
+
+/* =====================================
+   IŞIK
+===================================== */
+
+const ambient =
+    new THREE.AmbientLight(
+        0x9cc7df,
+        1.2
     );
 
-}
+scene.add(ambient);
 
 
-function ara(){
+const sun =
+    new THREE.DirectionalLight(
+        0xffffff,
+        2.2
+    );
 
-    const aranan =
-        document.getElementById("arama").value;
+sun.position.set(
+    5,
+    3,
+    5
+);
 
-    const parseller =
-        document.querySelectorAll(".parcel");
+scene.add(sun);
 
-    parseller.forEach(function(parsel){
 
-        if(
-            aranan === "" ||
-            parsel.dataset.id.includes(aranan)
-        ){
+/* =====================================
+   DÜNYA GRUBU
+===================================== */
 
-            parsel.style.display = "";
+const earthGroup =
+    new THREE.Group();
 
-        }else{
+scene.add(
+    earthGroup
+);
 
-            parsel.style.display = "none";
 
-        }
+/* =====================================
+   DÜNYA
+===================================== */
+
+const earthGeometry =
+    new THREE.SphereGeometry(
+        1,
+        96,
+        96
+    );
+
+
+const earthMaterial =
+    new THREE.MeshPhongMaterial({
+
+        color:0x126d91,
+
+        shininess:20,
+
+        specular:0x234f6c
 
     });
 
+
+const earth =
+    new THREE.Mesh(
+        earthGeometry,
+        earthMaterial
+    );
+
+
+earthGroup.add(
+    earth
+);
+
+
+/* =====================================
+   ATMOSFER
+===================================== */
+
+const atmosphereGeometry =
+    new THREE.SphereGeometry(
+        1.045,
+        64,
+        64
+    );
+
+
+const atmosphereMaterial =
+    new THREE.MeshBasicMaterial({
+
+        color:0x35dcff,
+
+        transparent:true,
+
+        opacity:.09,
+
+        side:THREE.BackSide
+
+    });
+
+
+const atmosphere =
+    new THREE.Mesh(
+        atmosphereGeometry,
+        atmosphereMaterial
+    );
+
+
+earthGroup.add(
+    atmosphere
+);
+
+
+/* =====================================
+   KITALAR
+===================================== */
+
+const landGroup =
+    new THREE.Group();
+
+
+earthGroup.add(
+    landGroup
+);
+
+
+const landMaterial =
+    new THREE.MeshPhongMaterial({
+
+        color:0x268d5d,
+
+        shininess:5
+
+    });
+
+
+function createLand(
+    latitude,
+    longitude,
+    scaleX,
+    scaleY,
+    scaleZ
+){
+
+    const phi =
+        (90 - latitude)
+        * Math.PI / 180;
+
+    const theta =
+        (longitude + 90)
+        * Math.PI / 180;
+
+
+    const x =
+        Math.sin(phi)
+        * Math.cos(theta);
+
+
+    const y =
+        Math.cos(phi);
+
+
+    const z =
+        Math.sin(phi)
+        * Math.sin(theta);
+
+
+    const geometry =
+        new THREE.SphereGeometry(
+            1,
+            20,
+            12
+        );
+
+
+    const land =
+        new THREE.Mesh(
+            geometry,
+            landMaterial
+        );
+
+
+    land.scale.set(
+        scaleX,
+        scaleY,
+        scaleZ
+    );
+
+
+    land.position.set(
+        x * 1.005,
+        y * 1.005,
+        z * 1.005
+    );
+
+
+    land.lookAt(
+        0,
+        0,
+        0
+    );
+
+
+    landGroup.add(
+        land
+    );
 }
 
 
-document.getElementById("dolu").textContent =
-    doluParseller.size.toLocaleString("tr-TR");
+/*
+   Stilize kıta şekilleri.
+*/
 
-document.getElementById("bos").textContent =
-    (10000 - doluParseller.size)
-    .toLocaleString("tr-TR");
+createLand(45,-100,.28,.08,.18);
+createLand(30,-90,.30,.10,.18);
+createLand(15,-75,.15,.08,.30);
 
-parselleriOlustur();
+createLand(45,10,.38,.10,.18);
+createLand(25,20,.28,.09,.22);
+createLand(0,20,.18,.08,.28);
+
+createLand(50,100,.42,.10,.20);
+createLand(30,120,.28,.08,.18);
+createLand(-25,135,.18,.07,.20);
+
+createLand(-25,25,.18,.08,.23);
+
+
+/* =====================================
+   PARSELLER
+===================================== */
+
+const TOTAL_PARCELS =
+    10000;
+
+
+const parcelGeometry =
+    new THREE.SphereGeometry(
+        .0105,
+        6,
+        6
+    );
+
+
+const parcelMaterial =
+    new THREE.MeshBasicMaterial({
+        color:0x35dcff
+    });
+
+
+/*
+   InstancedMesh:
+   10.000 parseli tek obje
+   olarak çizerek performansı artırır.
+*/
+
+const parcels =
+    new THREE.InstancedMesh(
+        parcelGeometry,
+        parcelMaterial,
+        TOTAL_PARCELS
+    );
+
+
+earthGroup.add(
+    parcels
+);
+
+
+const dummy =
+    new THREE.Object3D();
+
+
+const color =
+    new THREE.Color();
+
+
+const premiumParcels =
+    new Set([
+        1,2,3,4,5,
+        10,11,12,
+        20,21
+    ]);
+
+
+const ownedParcels =
+    new Set([
+        17,
+        48,
+        126,
+        321,
+        777,
+        1024,
+        2500,
+        5000,
+        7777,
+        9999
+    ]);
+
+
+/*
+   Fibonacci dağılımı.
+   Parseller küreye dengeli dağılır.
+*/
+
+for(
+    let i = 0;
+    i < TOTAL_PARCELS;
+    i++
+){
+
+    const phi =
+        Math.acos(
+            -1 +
+            (2 * (i + .5))
+            / TOTAL_PARCELS
+        );
+
+
+    const theta =
+        Math.PI *
+        (1 + Math.sqrt(5))
+        * (i + .5);
+
+
+    const x =
+        Math.sin(phi)
+        * Math.cos(theta);
+
+
+    const y =
+        Math.cos(phi);
+
+
+    const z =
+        Math.sin(phi)
+        * Math.sin(theta);
+
+
+    dummy.position.set(
+        x * 1.018,
+        y * 1.018,
+        z * 1.018
+    );
+
+
+    dummy.lookAt(
+        x * 2,
+        y * 2,
+        z * 2
+    );
+
+
+    dummy.updateMatrix();
+
+
+    parcels.setMatrixAt(
+        i,
+        dummy.matrix
+    );
+
+
+    if(
+        premiumParcels.has(i + 1)
+    ){
+
+        color.set(
+            0xffd34d
+        );
+
+    }
+    else if(
+        ownedParcels.has(i + 1)
+    ){
+
+        color.set(
+            0x50e58a
+        );
+
+    }
+    else{
+
+        color.set(
+            0x35dcff
+        );
+
+    }
+
+
+    parcels.setColorAt(
+        i,
+        color
+    );
+}
+
+
+parcels.instanceMatrix.needsUpdate =
+    true;
+
+parcels.instanceColor.needsUpdate =
+    true;
+
+
+/* =====================================
+   MOUSE / TOUCH
+===================================== */
+
+let dragging =
+    false;
+
+let lastX =
+    0;
+
+let lastY =
+    0;
+
+let movement =
+    0;
+
+
+renderer.domElement.addEventListener(
+    "pointerdown",
+    function(event){
+
+        dragging = true;
+
+        lastX =
+            event.clientX;
+
+        lastY =
+            event.clientY;
+
+        movement = 0;
+
+    }
+);
+
+
+window.addEventListener(
+    "pointermove",
+    function(event){
+
+        if(!dragging)
+            return;
+
+
+        const dx =
+            event.clientX -
+            lastX;
+
+
+        const dy =
+            event.clientY -
+            lastY;
+
+
+        earthGroup.rotation.y +=
+            dx * .005;
+
+
+        earthGroup.rotation.x +=
+            dy * .003;
+
+
+        earthGroup.rotation.x =
+            Math.max(
+                -1.3,
+                Math.min(
+                    1.3,
+                    earthGroup.rotation.x
+                )
+            );
+
+
+        lastX =
+            event.clientX;
+
+        lastY =
+            event.clientY;
+
+
+        movement +=
+            Math.abs(dx) +
+            Math.abs(dy);
+
+    }
+);
+
+
+window.addEventListener(
+    "pointerup",
+    function(){
+
+        dragging = false;
+
+    }
+);
+
+
+/* =====================================
+   ZOOM
+===================================== */
+
+renderer.domElement.addEventListener(
+    "wheel",
+    function(event){
+
+        event.preventDefault();
+
+
+        camera.position.z +=
+            event.deltaY * .0015;
+
+
+        camera.position.z =
+            Math.max(
+                1.55,
+                Math.min(
+                    5.5,
+                    camera.position.z
+                )
+            );
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =====================================
+   PARSEL TIKLAMA
+===================================== */
+
+const raycaster =
+    new THREE.Raycaster();
+
+
+const mouse =
+    new THREE.Vector2();
+
+
+renderer.domElement.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            movement > 8
+        )
+            return;
+
+
+        mouse.x =
+            event.clientX /
+            window.innerWidth *
+            2 - 1;
+
+
+        mouse.y =
+            -(
+                event.clientY /
+                window.innerHeight
+            ) * 2 + 1;
+
+
+        raycaster.setFromCamera(
+            mouse,
+            camera
+        );
+
+
+        const hits =
+            raycaster.intersectObject(
+                parcels
+            );
+
+
+        if(
+            hits.length === 0
+        )
+            return;
+
+
+        const instanceId =
+            hits[0].instanceId;
+
+
+        if(
+            instanceId === undefined
+        )
+            return;
+
+
+        const id =
+            instanceId + 1;
+
+
+        showParcel(
+            id
+        );
+
+    }
+);
+
+
+/* =====================================
+   PARSEL BİLGİ
+===================================== */
+
+function showParcel(
+    id
+){
+
+    const title =
+        document.getElementById(
+            "parcelTitle"
+        );
+
+
+    const description =
+        document.getElementById(
+            "parcelDescription"
+        );
+
+
+    title.textContent =
+        "Parsel #" + id;
+
+
+    if(
+        premiumParcels.has(id)
+    ){
+
+        description.textContent =
+            "⭐ Bu premium parseldir.";
+
+    }
+    else if(
+        ownedParcels.has(id)
+    ){
+
+        description.textContent =
+            "🟢 Bu parsel şu anda sahipli.";
+
+    }
+    else{
+
+        description.textContent =
+            "🔵 Bu parsel müsait.";
+
+    }
+
+
+    document
+        .getElementById(
+            "parcelCard"
+        )
+        .classList.add(
+            "active"
+        );
+}
+
+
+function closeParcel(){
+
+    document
+        .getElementById(
+            "parcelCard"
+        )
+        .classList.remove(
+            "active"
+        );
+
+}
+
+
+/* =====================================
+   EKRAN BOYUTU
+===================================== */
+
+window.addEventListener(
+    "resize",
+    function(){
+
+        camera.aspect =
+            window.innerWidth /
+            window.innerHeight;
+
+
+        camera.updateProjectionMatrix();
+
+
+        renderer.setSize(
+            window.innerWidth,
+            window.innerHeight
+        );
+
+    }
+);
+
+
+/* =====================================
+   ANİMASYON
+===================================== */
+
+function animate(){
+
+    requestAnimationFrame(
+        animate
+    );
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+animate();
 
 </script>
 
