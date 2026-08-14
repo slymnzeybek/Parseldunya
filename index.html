@@ -1,1 +1,535 @@
 index.html
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Parseldunya | 10.000 Parsellik Dijital Dünya</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#07111f;
+    color:white;
+}
+
+header{
+    position:sticky;
+    top:0;
+    z-index:10;
+    background:#0b192b;
+    border-bottom:1px solid #243951;
+}
+
+.nav{
+    max-width:1200px;
+    margin:auto;
+    padding:16px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:24px;
+    font-weight:900;
+}
+
+.logo span{
+    color:#48d7ff;
+}
+
+.btn{
+    border:0;
+    border-radius:12px;
+    padding:12px 18px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.primary{
+    background:#48d7ff;
+    color:#06101b;
+}
+
+.secondary{
+    background:#162a42;
+    color:white;
+    border:1px solid #304863;
+}
+
+.hero{
+    max-width:1200px;
+    margin:auto;
+    padding:60px 20px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:center;
+}
+
+.badge{
+    color:#48d7ff;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+h1{
+    font-size:clamp(42px,7vw,78px);
+    line-height:.95;
+    margin-bottom:22px;
+}
+
+.hero p{
+    color:#aebbd0;
+    font-size:18px;
+    line-height:1.6;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:25px;
+    flex-wrap:wrap;
+}
+
+.world{
+    height:350px;
+    border-radius:50%;
+    background:
+    radial-gradient(circle at 35% 30%,
+    #7aeaff,
+    #1c8bbd 35%,
+    #125078 55%,
+    #07111f 72%);
+    box-shadow:
+    0 0 80px #35d7ff55,
+    inset -40px -30px 80px #0009;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-top:30px;
+}
+
+.stat{
+    background:#0d1e32;
+    border:1px solid #263c55;
+    border-radius:15px;
+    padding:18px;
+}
+
+.stat strong{
+    display:block;
+    font-size:25px;
+}
+
+.stat small{
+    color:#8fa1b8;
+}
+
+.section{
+    max-width:1200px;
+    margin:auto;
+    padding:30px 20px 70px;
+}
+
+.section h2{
+    font-size:34px;
+    margin-bottom:8px;
+}
+
+.description{
+    color:#8fa1b8;
+    margin-bottom:20px;
+}
+
+.search{
+    width:100%;
+    padding:15px;
+    border-radius:12px;
+    border:1px solid #304863;
+    background:#0d1e32;
+    color:white;
+    margin:20px 0;
+    font-size:16px;
+}
+
+.parcel-grid{
+    display:grid;
+    grid-template-columns:repeat(20,1fr);
+    gap:4px;
+    background:#091727;
+    padding:10px;
+    border-radius:18px;
+    border:1px solid #263c55;
+}
+
+.parcel{
+    aspect-ratio:1;
+    border:1px solid #2b4968;
+    background:#12304b;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+.parcel:hover{
+    background:#48d7ff;
+    transform:scale(1.15);
+    z-index:2;
+}
+
+.parcel.sold{
+    background:#21647a;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:#000b;
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.active{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:450px;
+    background:#0d1e32;
+    border:1px solid #304863;
+    border-radius:20px;
+    padding:25px;
+}
+
+.modal-box h2{
+    margin:10px 0;
+}
+
+.modal-box p{
+    color:#aebbd0;
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.close{
+    float:right;
+    background:none;
+    border:0;
+    color:white;
+    font-size:25px;
+    cursor:pointer;
+}
+
+footer{
+    border-top:1px solid #263c55;
+    text-align:center;
+    padding:25px;
+    color:#8193aa;
+}
+
+@media(max-width:800px){
+
+    .hero{
+        grid-template-columns:1fr;
+        padding-top:40px;
+    }
+
+    .world{
+        height:240px;
+    }
+
+    .parcel-grid{
+        grid-template-columns:repeat(10,1fr);
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat:last-child{
+        grid-column:1/-1;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="nav">
+        <div class="logo">
+            Parsel<span>dunya</span>
+        </div>
+
+        <button class="btn secondary"
+        onclick="document.getElementById('parseller').scrollIntoView({behavior:'smooth'})">
+            Parseller
+        </button>
+    </div>
+</header>
+
+
+<section class="hero">
+
+    <div>
+
+        <div class="badge">
+            🌍 10.000 PARSELLİK DİJİTAL DÜNYA
+        </div>
+
+        <h1>
+            Dünyada kendi yerini al.
+        </h1>
+
+        <p>
+            Dijital dünyadaki parselini seç.
+            Markanı, işletmeni veya projenı görünür
+            hale getir.
+        </p>
+
+        <div class="buttons">
+
+            <button class="btn primary"
+            onclick="document.getElementById('parseller').scrollIntoView({behavior:'smooth'})">
+                🌍 Parsel Seç
+            </button>
+
+            <button class="btn secondary"
+            onclick="nasılCalisir()">
+                Nasıl çalışır?
+            </button>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong>10.000</strong>
+                <small>Toplam Parsel</small>
+            </div>
+
+            <div class="stat">
+                <strong id="dolu">10</strong>
+                <small>Dolu</small>
+            </div>
+
+            <div class="stat">
+                <strong id="bos">9.990</strong>
+                <small>Müsait</small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="world"></div>
+
+</section>
+
+
+<section class="section" id="parseller">
+
+    <h2>10.000 Parsellik Dünya</h2>
+
+    <p class="description">
+        Bir parsel seçerek ayrıntılarını görüntüle.
+    </p>
+
+    <input
+        class="search"
+        id="arama"
+        type="number"
+        placeholder="Parsel numarası ara..."
+        oninput="ara()"
+    >
+
+    <div class="parcel-grid" id="grid"></div>
+
+</section>
+
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="kapat()">×</button>
+
+        <h2 id="baslik">
+            Parsel #1
+        </h2>
+
+        <p id="bilgi">
+            Bu parsel müsait.
+            Marka veya işletme alanı olarak
+            kullanılabilir.
+        </p>
+
+        <button class="btn primary"
+        onclick="talepEt()">
+            Parseli Talep Et
+        </button>
+
+    </div>
+
+</div>
+
+
+<footer>
+    © 2026 Parseldunya — 10.000 Parsellik Dijital Dünya
+</footer>
+
+
+<script>
+
+const grid = document.getElementById("grid");
+
+const doluParseller = new Set([
+    17,
+    48,
+    126,
+    321,
+    777,
+    1024,
+    2500,
+    5000,
+    7777,
+    9999
+]);
+
+
+function parselleriOlustur(){
+
+    const fragment = document.createDocumentFragment();
+
+    for(let i = 1; i <= 10000; i++){
+
+        const parsel = document.createElement("button");
+
+        parsel.className = "parcel";
+
+        parsel.dataset.id = i;
+
+        parsel.title = "Parsel #" + i;
+
+        if(doluParseller.has(i)){
+            parsel.classList.add("sold");
+        }
+
+        parsel.onclick = function(){
+            parselAc(i);
+        };
+
+        fragment.appendChild(parsel);
+    }
+
+    grid.appendChild(fragment);
+}
+
+
+function parselAc(id){
+
+    document.getElementById("baslik").textContent =
+        "Parsel #" + id;
+
+    if(doluParseller.has(id)){
+
+        document.getElementById("bilgi").textContent =
+            "Bu parsel şu anda dolu olarak işaretlenmiş.";
+
+    }else{
+
+        document.getElementById("bilgi").textContent =
+            "Bu parsel şu anda müsait. Marka, işletme veya reklam alanı olarak değerlendirilebilir.";
+
+    }
+
+    document.getElementById("modal")
+        .classList.add("active");
+}
+
+
+function kapat(){
+
+    document.getElementById("modal")
+        .classList.remove("active");
+}
+
+
+function talepEt(){
+
+    alert(
+        "Parsel talep sistemi bir sonraki aşamada ödeme ve üyelik sistemiyle bağlanacak."
+    );
+
+}
+
+
+function nasılCalisir(){
+
+    alert(
+        "1. Bir parsel seç.\n\n" +
+        "2. Parselini talep et.\n\n" +
+        "3. Marka veya işletme bilgilerini oluştur.\n\n" +
+        "4. Ödeme sistemi bağlandığında satın alma işlemini tamamla."
+    );
+
+}
+
+
+function ara(){
+
+    const aranan =
+        document.getElementById("arama").value;
+
+    const parseller =
+        document.querySelectorAll(".parcel");
+
+    parseller.forEach(function(parsel){
+
+        if(
+            aranan === "" ||
+            parsel.dataset.id.includes(aranan)
+        ){
+
+            parsel.style.display = "";
+
+        }else{
+
+            parsel.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+document.getElementById("dolu").textContent =
+    doluParseller.size.toLocaleString("tr-TR");
+
+document.getElementById("bos").textContent =
+    (10000 - doluParseller.size)
+    .toLocaleString("tr-TR");
+
+parselleriOlustur();
+
+</script>
+
+</body>
+</html>
