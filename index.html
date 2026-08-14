@@ -2,1220 +2,1326 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
 <title>Parseldunya | Dijital Dünya</title>
 
 <style>
+
 *{
-    box-sizing:border-box;
+box-sizing:border-box;
 }
 
-html,body{
-    margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#02060d;
-    color:white;
-    font-family:Arial,sans-serif;
+html,
+body{
+margin:0;
+width:100%;
+height:100%;
+overflow:hidden;
+background:#00030a;
+font-family:Arial,Helvetica,sans-serif;
+color:white;
 }
 
 #app{
-    position:fixed;
-    inset:0;
-}
-
-canvas{
-    display:block;
+position:fixed;
+inset:0;
 }
 
 /* ÜST MENÜ */
 
-.top{
-    position:fixed;
-    z-index:10;
-    top:0;
-    left:0;
-    right:0;
-    height:75px;
-    padding:0 25px;
+header{
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+position:fixed;
+z-index:20;
 
-    background:
-        linear-gradient(
-            #02060de8,
-            transparent
-        );
+top:0;
+left:0;
+right:0;
 
-    pointer-events:none;
+height:80px;
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+padding:0 30px;
+
+background:
+linear-gradient(
+180deg,
+rgba(0,0,0,.85),
+rgba(0,0,0,0)
+);
+
+pointer-events:none;
+
 }
 
 .logo{
-    font-size:25px;
-    font-weight:900;
-    pointer-events:auto;
+
+font-size:26px;
+font-weight:900;
+
+letter-spacing:-1px;
+
+pointer-events:auto;
+
 }
 
 .logo span{
-    color:#35dcff;
+
+color:#38ddff;
+
 }
 
-.menu{
-    pointer-events:auto;
+nav{
+
+display:flex;
+gap:10px;
+
+pointer-events:auto;
+
 }
 
-.menu a{
-    display:inline-block;
-    padding:12px 18px;
+nav a{
 
-    border-radius:12px;
+text-decoration:none;
 
-    background:#35dcff;
-    color:#031018;
+color:white;
 
-    text-decoration:none;
-    font-weight:800;
+padding:12px 18px;
+
+border-radius:12px;
+
+background:
+rgba(255,255,255,.08);
+
+border:
+1px solid rgba(255,255,255,.12);
+
+backdrop-filter:blur(12px);
+
+font-weight:bold;
+
+transition:.25s;
+
 }
 
-/* ALT BİLGİ */
+nav a:hover{
 
-.info{
-    position:fixed;
-    z-index:10;
+background:#38ddff;
+color:#001018;
 
-    left:22px;
-    bottom:22px;
-
-    width:390px;
-    max-width:calc(100% - 44px);
-
-    padding:20px;
-
-    border-radius:20px;
-
-    background:#071321e8;
-    border:1px solid #ffffff18;
-
-    backdrop-filter:blur(16px);
 }
 
-.info h1{
-    margin:0 0 8px;
-    font-size:24px;
+
+/* BAŞLIK */
+
+.hero{
+
+position:fixed;
+
+z-index:10;
+
+left:35px;
+top:120px;
+
+max-width:430px;
+
+pointer-events:none;
+
 }
 
-.info p{
-    margin:0;
-    color:#9baabd;
-    line-height:1.55;
+.hero .small{
+
+font-size:12px;
+
+letter-spacing:4px;
+
+color:#58dfff;
+
+font-weight:bold;
+
+}
+
+.hero h1{
+
+font-size:52px;
+
+line-height:1.02;
+
+margin:12px 0;
+
+letter-spacing:-2px;
+
+}
+
+.hero p{
+
+font-size:16px;
+
+line-height:1.6;
+
+color:#aebdcd;
+
+}
+
+
+/* ALT PANEL */
+
+.bottom{
+
+position:fixed;
+
+z-index:20;
+
+left:30px;
+right:30px;
+bottom:25px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:end;
+
+pointer-events:none;
+
 }
 
 .stats{
-    display:flex;
-    gap:8px;
-    margin-top:15px;
+
+display:flex;
+
+gap:10px;
+
 }
 
 .stat{
-    flex:1;
-    padding:11px;
 
-    border-radius:12px;
+min-width:130px;
 
-    background:#ffffff08;
+padding:15px 18px;
+
+border-radius:16px;
+
+background:
+rgba(5,15,27,.75);
+
+border:
+1px solid rgba(255,255,255,.1);
+
+backdrop-filter:blur(15px);
+
 }
 
 .stat strong{
-    display:block;
-    font-size:19px;
+
+display:block;
+
+font-size:22px;
+
 }
 
-.stat small{
-    color:#77889e;
+.stat span{
+
+color:#8495aa;
+
+font-size:12px;
+
 }
 
-/* KONTROL */
+.controls{
 
-.help{
-    position:fixed;
-    z-index:10;
+padding:13px 17px;
 
-    right:22px;
-    bottom:22px;
+border-radius:14px;
 
-    padding:12px 15px;
+background:
+rgba(5,15,27,.75);
 
-    border-radius:12px;
+border:
+1px solid rgba(255,255,255,.1);
 
-    background:#071321dd;
+backdrop-filter:blur(15px);
 
-    color:#94a4b8;
+font-size:12px;
 
-    font-size:12px;
+color:#9eafc2;
+
 }
 
-/* PARSEL BİLGİ */
 
-.parcel-card{
-    position:fixed;
-    z-index:20;
+/* PARSEL KARTI */
 
-    display:none;
+#parcelCard{
 
-    top:95px;
-    right:22px;
+position:fixed;
 
-    width:310px;
-    max-width:calc(100% - 44px);
+z-index:50;
 
-    padding:20px;
+right:30px;
 
-    border-radius:18px;
+top:110px;
 
-    background:#071321f5;
-    border:1px solid #35dcff55;
+width:320px;
 
-    backdrop-filter:blur(16px);
+display:none;
+
+padding:22px;
+
+border-radius:20px;
+
+background:
+rgba(4,13,24,.92);
+
+border:
+1px solid rgba(56,221,255,.3);
+
+backdrop-filter:blur(20px);
+
+box-shadow:
+0 20px 70px rgba(0,0,0,.5);
+
 }
 
-.parcel-card.active{
-    display:block;
-}
+#parcelCard.show{
 
-.parcel-card h2{
-    margin:0 0 8px;
-}
+display:block;
 
-.parcel-card p{
-    color:#9baabd;
-    line-height:1.5;
 }
 
 .close{
-    float:right;
 
-    background:none;
-    border:0;
+float:right;
 
-    color:white;
+background:none;
 
-    font-size:24px;
+border:0;
 
-    cursor:pointer;
+color:white;
+
+font-size:25px;
+
+cursor:pointer;
+
 }
 
-.parcel-link{
-    display:block;
+#parcelCard h2{
 
-    text-align:center;
+margin:0 0 10px;
 
-    padding:12px;
+font-size:25px;
 
-    border-radius:11px;
-
-    background:#35dcff;
-
-    color:#031018;
-
-    text-decoration:none;
-
-    font-weight:800;
 }
 
-/* LEJANT */
+#parcelCard p{
 
-.legend{
-    position:fixed;
-    z-index:10;
+color:#9dafc2;
 
-    top:90px;
-    left:22px;
+line-height:1.6;
 
-    padding:12px 15px;
-
-    border-radius:13px;
-
-    background:#071321dd;
-
-    color:#9baabd;
-
-    font-size:12px;
 }
 
-.dot{
-    display:inline-block;
+.parcelButton{
 
-    width:8px;
-    height:8px;
+display:block;
 
-    margin-right:5px;
+text-align:center;
 
-    border-radius:50%;
-}
+text-decoration:none;
 
-.free{
-    background:#35dcff;
-}
+padding:13px;
 
-.premium{
-    background:#ffd34d;
-}
+border-radius:12px;
 
-.owned{
-    background:#50e58a;
+background:#38ddff;
+
+color:#001018;
+
+font-weight:900;
+
 }
 
 
 /* MOBİL */
 
-@media(max-width:650px){
+@media(max-width:700px){
 
-    .top{
-        height:65px;
-        padding:0 14px;
-    }
+header{
 
-    .logo{
-        font-size:20px;
-    }
+padding:0 15px;
 
-    .legend{
-        top:75px;
-        left:12px;
-    }
+height:65px;
 
-    .help{
-        display:none;
-    }
-
-    .info{
-        left:12px;
-        right:12px;
-        bottom:12px;
-
-        width:auto;
-        max-width:none;
-    }
-
-    .parcel-card{
-        top:auto;
-        right:12px;
-        left:12px;
-        bottom:12px;
-        width:auto;
-        max-width:none;
-    }
 }
+
+.logo{
+
+font-size:21px;
+
+}
+
+nav a{
+
+padding:9px 12px;
+
+font-size:12px;
+
+}
+
+.hero{
+
+left:18px;
+top:90px;
+
+max-width:330px;
+
+}
+
+.hero h1{
+
+font-size:38px;
+
+}
+
+.hero p{
+
+font-size:14px;
+
+}
+
+.bottom{
+
+left:12px;
+right:12px;
+bottom:12px;
+
+}
+
+.stats{
+
+width:100%;
+
+}
+
+.stat{
+
+min-width:0;
+flex:1;
+
+padding:11px;
+
+}
+
+.stat strong{
+
+font-size:17px;
+
+}
+
+.controls{
+
+display:none;
+
+}
+
+#parcelCard{
+
+left:15px;
+right:15px;
+bottom:15px;
+top:auto;
+
+width:auto;
+
+}
+
+}
+
 </style>
 </head>
 
-
 <body>
+
 
 <div id="app"></div>
 
 
-<!-- ÜST MENÜ -->
+<header>
 
-<div class="top">
+<div class="logo">
 
-    <div class="logo">
-        Parsel<span>dunya</span>
-    </div>
+Parsel<span>dunya</span>
 
-    <div class="menu">
+</div>
 
-        <a href="parseller.html">
-            Parseller
-        </a>
+<nav>
 
-    </div>
+<a href="parseller.html">
+
+Parseller
+
+</a>
+
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<div class="small">
+
+DIGITAL WORLD
+
+</div>
+
+<h1>
+
+Kendi<br>
+Parselini<br>
+Keşfet.
+
+</h1>
+
+<p>
+
+10.000 dijital parselden oluşan
+yeni nesil dünya.
+Dünyayı çevir, yakınlaş ve
+kendi parselini keşfet.
+
+</p>
+
+</section>
+
+
+<div class="bottom">
+
+<div class="stats">
+
+<div class="stat">
+
+<strong>10.000</strong>
+
+<span>
+Dijital Parsel
+</span>
+
+</div>
+
+<div class="stat">
+
+<strong>9.990</strong>
+
+<span>
+Müsait
+</span>
+
+</div>
+
+<div class="stat">
+
+<strong>10</strong>
+
+<span>
+Sahipli
+</span>
+
+</div>
 
 </div>
 
 
-<!-- LEJANT -->
+<div class="controls">
 
-<div class="legend">
+🖱️ Sürükle
+&nbsp; • &nbsp;
+🔍 Yakınlaştır
+&nbsp; • &nbsp;
+👆 Parseli seç
 
-    <span>
-        <i class="dot free"></i>
-        Müsait
-    </span>
-
-    &nbsp;&nbsp;
-
-    <span>
-        <i class="dot premium"></i>
-        Premium
-    </span>
-
-    &nbsp;&nbsp;
-
-    <span>
-        <i class="dot owned"></i>
-        Sahipli
-    </span>
+</div>
 
 </div>
 
 
-<!-- BİLGİ -->
+<div id="parcelCard">
 
-<div class="info">
+<button
+class="close"
+onclick="closeParcel()">
 
-    <h1>
-        🌍 10.000 Parsellik Dijital Dünya
-    </h1>
+×
 
-    <p>
-        Dünyayı mouse ile çevir,
-        yakınlaştır ve üzerindeki
-        dijital parselleri keşfet.
-    </p>
+</button>
 
-    <div class="stats">
+<h2 id="parcelTitle">
 
-        <div class="stat">
-            <strong>10.000</strong>
-            <small>Toplam</small>
-        </div>
+Parsel #1
 
-        <div class="stat">
-            <strong>9.990</strong>
-            <small>Müsait</small>
-        </div>
+</h2>
 
-        <div class="stat">
-            <strong>10</strong>
-            <small>Sahipli</small>
-        </div>
+<p id="parcelText">
 
-    </div>
+Bu parsel müsait.
+
+</p>
+
+<a
+href="parseller.html"
+class="parcelButton">
+
+Parsel Sayfasını Aç
+
+</a>
 
 </div>
 
-
-<div class="help">
-    🖱️ Sürükle: Döndür
-    &nbsp; • &nbsp;
-    🔍 Tekerlek: Yakınlaştır
-</div>
-
-
-<!-- PARSEL KARTI -->
-
-<div
-    id="parcelCard"
-    class="parcel-card">
-
-    <button
-        class="close"
-        onclick="closeParcel()">
-
-        ×
-
-    </button>
-
-    <h2 id="parcelTitle">
-        Parsel #1
-    </h2>
-
-    <p id="parcelDescription"></p>
-
-    <a
-        class="parcel-link"
-        href="parseller.html">
-
-        Parselleri Gör
-
-    </a>
-
-</div>
-
-
-<!-- THREE.JS -->
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 
 
 <script>
 
-/* =====================================
+
+/* =========================
    SAHNE
-===================================== */
-
-const app =
-    document.getElementById("app");
-
+========================= */
 
 const scene =
-    new THREE.Scene();
+new THREE.Scene();
 
 
 const camera =
-    new THREE.PerspectiveCamera(
-        42,
-        window.innerWidth /
-        window.innerHeight,
-        0.1,
-        100
-    );
+new THREE.PerspectiveCamera(
+
+40,
+
+window.innerWidth /
+window.innerHeight,
+
+0.1,
+
+100
+
+);
 
 
-camera.position.z = 3;
+camera.position.z=3;
 
 
-/* =====================================
+/* =========================
    RENDER
-===================================== */
+========================= */
 
 const renderer =
-    new THREE.WebGLRenderer({
-        antialias:true,
-        alpha:true
-    });
+new THREE.WebGLRenderer({
+
+antialias:true,
+
+alpha:true
+
+});
 
 
 renderer.setPixelRatio(
-    Math.min(
-        window.devicePixelRatio,
-        2
-    )
+
+Math.min(
+window.devicePixelRatio,
+2
+
+)
+
 );
 
 
 renderer.setSize(
-    window.innerWidth,
-    window.innerHeight
+
+window.innerWidth,
+window.innerHeight
+
 );
 
 
-app.appendChild(
-    renderer.domElement
+document
+.getElementById("app")
+.appendChild(renderer.domElement);
+
+
+/* =========================
+   YILDIZLAR
+========================= */
+
+const starGeometry =
+new THREE.BufferGeometry();
+
+
+const starCount=4500;
+
+
+const positions =
+new Float32Array(
+starCount*3
 );
 
 
-/* =====================================
+for(
+let i=0;
+i<starCount;
+i++
+){
+
+const radius=
+20+Math.random()*30;
+
+const theta=
+Math.random()*Math.PI*2;
+
+const phi=
+Math.acos(
+2*Math.random()-1
+);
+
+positions[i*3]=
+radius*
+Math.sin(phi)*
+Math.cos(theta);
+
+positions[i*3+1]=
+radius*
+Math.cos(phi);
+
+positions[i*3+2]=
+radius*
+Math.sin(phi)*
+Math.sin(theta);
+
+}
+
+
+starGeometry.setAttribute(
+
+"position",
+
+new THREE.BufferAttribute(
+positions,
+3
+)
+
+);
+
+
+const stars =
+new THREE.Points(
+
+starGeometry,
+
+new THREE.PointsMaterial({
+
+color:0xffffff,
+
+size:.035,
+
+transparent:true,
+
+opacity:.8
+
+})
+
+);
+
+
+scene.add(stars);
+
+
+/* =========================
    IŞIK
-===================================== */
+========================= */
 
-const ambient =
-    new THREE.AmbientLight(
-        0x9cc7df,
-        1.2
-    );
+scene.add(
 
-scene.add(ambient);
+new THREE.AmbientLight(
+0x8aa8c0,
+1.15
+)
+
+);
 
 
 const sun =
-    new THREE.DirectionalLight(
-        0xffffff,
-        2.2
-    );
+new THREE.DirectionalLight(
+0xffffff,
+2.5
+);
 
 sun.position.set(
-    5,
-    3,
-    5
+5,
+3,
+5
 );
 
 scene.add(sun);
 
 
-/* =====================================
+/* =========================
    DÜNYA GRUBU
-===================================== */
+========================= */
 
-const earthGroup =
-    new THREE.Group();
+const world =
+new THREE.Group();
 
-scene.add(
-    earthGroup
-);
+scene.add(world);
 
 
-/* =====================================
+/* =========================
    DÜNYA
-===================================== */
+========================= */
 
 const earthGeometry =
-    new THREE.SphereGeometry(
-        1,
-        96,
-        96
-    );
+new THREE.SphereGeometry(
+1,
+128,
+128
+);
 
 
 const earthMaterial =
-    new THREE.MeshPhongMaterial({
+new THREE.MeshPhongMaterial({
 
-        color:0x126d91,
+color:0x1b7895,
 
-        shininess:20,
+shininess:25,
 
-        specular:0x234f6c
+specular:0x37647d
 
-    });
+});
 
 
 const earth =
-    new THREE.Mesh(
-        earthGeometry,
-        earthMaterial
-    );
+new THREE.Mesh(
 
+earthGeometry,
+earthMaterial
 
-earthGroup.add(
-    earth
 );
 
 
-/* =====================================
+world.add(earth);
+
+
+/* =========================
    ATMOSFER
-===================================== */
-
-const atmosphereGeometry =
-    new THREE.SphereGeometry(
-        1.045,
-        64,
-        64
-    );
-
-
-const atmosphereMaterial =
-    new THREE.MeshBasicMaterial({
-
-        color:0x35dcff,
-
-        transparent:true,
-
-        opacity:.09,
-
-        side:THREE.BackSide
-
-    });
-
+========================= */
 
 const atmosphere =
-    new THREE.Mesh(
-        atmosphereGeometry,
-        atmosphereMaterial
-    );
+new THREE.Mesh(
 
+new THREE.SphereGeometry(
+1.045,
+96,
+96
+),
 
-earthGroup.add(
-    atmosphere
+new THREE.MeshBasicMaterial({
+
+color:0x39dfff,
+
+transparent:true,
+
+opacity:.09,
+
+side:THREE.BackSide
+
+})
+
 );
 
 
-/* =====================================
-   KITALAR
-===================================== */
-
-const landGroup =
-    new THREE.Group();
+world.add(atmosphere);
 
 
-earthGroup.add(
-    landGroup
+/* =========================
+   GECE IŞIĞI EFEKTİ
+========================= */
+
+const night =
+new THREE.Mesh(
+
+new THREE.SphereGeometry(
+1.008,
+96,
+96
+),
+
+new THREE.MeshBasicMaterial({
+
+color:0xffa52f,
+
+transparent:true,
+
+opacity:.045,
+
+side:THREE.BackSide
+
+})
+
 );
 
 
-const landMaterial =
-    new THREE.MeshPhongMaterial({
-
-        color:0x268d5d,
-
-        shininess:5
-
-    });
+world.add(night);
 
 
-function createLand(
-    latitude,
-    longitude,
-    scaleX,
-    scaleY,
-    scaleZ
-){
-
-    const phi =
-        (90 - latitude)
-        * Math.PI / 180;
-
-    const theta =
-        (longitude + 90)
-        * Math.PI / 180;
-
-
-    const x =
-        Math.sin(phi)
-        * Math.cos(theta);
-
-
-    const y =
-        Math.cos(phi);
-
-
-    const z =
-        Math.sin(phi)
-        * Math.sin(theta);
-
-
-    const geometry =
-        new THREE.SphereGeometry(
-            1,
-            20,
-            12
-        );
-
-
-    const land =
-        new THREE.Mesh(
-            geometry,
-            landMaterial
-        );
-
-
-    land.scale.set(
-        scaleX,
-        scaleY,
-        scaleZ
-    );
-
-
-    land.position.set(
-        x * 1.005,
-        y * 1.005,
-        z * 1.005
-    );
-
-
-    land.lookAt(
-        0,
-        0,
-        0
-    );
-
-
-    landGroup.add(
-        land
-    );
-}
-
-
-/*
-   Stilize kıta şekilleri.
-*/
-
-createLand(45,-100,.28,.08,.18);
-createLand(30,-90,.30,.10,.18);
-createLand(15,-75,.15,.08,.30);
-
-createLand(45,10,.38,.10,.18);
-createLand(25,20,.28,.09,.22);
-createLand(0,20,.18,.08,.28);
-
-createLand(50,100,.42,.10,.20);
-createLand(30,120,.28,.08,.18);
-createLand(-25,135,.18,.07,.20);
-
-createLand(-25,25,.18,.08,.23);
-
-
-/* =====================================
+/* =========================
    PARSELLER
-===================================== */
+========================= */
 
-const TOTAL_PARCELS =
-    10000;
+const total=10000;
 
 
 const parcelGeometry =
-    new THREE.SphereGeometry(
-        .0105,
-        6,
-        6
-    );
+new THREE.SphereGeometry(
+.010,
+6,
+6
+);
 
 
 const parcelMaterial =
-    new THREE.MeshBasicMaterial({
-        color:0x35dcff
-    });
+new THREE.MeshBasicMaterial({
 
+color:0x36dcff
 
-/*
-   InstancedMesh:
-   10.000 parseli tek obje
-   olarak çizerek performansı artırır.
-*/
+});
+
 
 const parcels =
-    new THREE.InstancedMesh(
-        parcelGeometry,
-        parcelMaterial,
-        TOTAL_PARCELS
-    );
+new THREE.InstancedMesh(
 
+parcelGeometry,
 
-earthGroup.add(
-    parcels
+parcelMaterial,
+
+total
+
 );
+
+
+world.add(parcels);
 
 
 const dummy =
-    new THREE.Object3D();
+new THREE.Object3D();
 
 
 const color =
-    new THREE.Color();
+new THREE.Color();
 
 
-const premiumParcels =
-    new Set([
-        1,2,3,4,5,
-        10,11,12,
-        20,21
-    ]);
+const premium =
+new Set([
+1,2,3,4,5,
+10,11,12,
+20,21
+]);
 
 
-const ownedParcels =
-    new Set([
-        17,
-        48,
-        126,
-        321,
-        777,
-        1024,
-        2500,
-        5000,
-        7777,
-        9999
-    ]);
+const owned =
+new Set([
+17,
+48,
+126,
+321,
+777,
+1024,
+2500,
+5000,
+7777,
+9999
+]);
 
-
-/*
-   Fibonacci dağılımı.
-   Parseller küreye dengeli dağılır.
-*/
 
 for(
-    let i = 0;
-    i < TOTAL_PARCELS;
-    i++
+let i=0;
+i<total;
+i++
 ){
 
-    const phi =
-        Math.acos(
-            -1 +
-            (2 * (i + .5))
-            / TOTAL_PARCELS
-        );
+const phi=
+Math.acos(
+
+-1+
+2*(i+.5)/total
+
+);
 
 
-    const theta =
-        Math.PI *
-        (1 + Math.sqrt(5))
-        * (i + .5);
+const theta=
+Math.PI*
+(1+Math.sqrt(5))*
+(i+.5);
 
 
-    const x =
-        Math.sin(phi)
-        * Math.cos(theta);
+const x=
+Math.sin(phi)*
+Math.cos(theta);
 
 
-    const y =
-        Math.cos(phi);
+const y=
+Math.cos(phi);
 
 
-    const z =
-        Math.sin(phi)
-        * Math.sin(theta);
+const z=
+Math.sin(phi)*
+Math.sin(theta);
 
 
-    dummy.position.set(
-        x * 1.018,
-        y * 1.018,
-        z * 1.018
-    );
+dummy.position.set(
+
+x*1.018,
+y*1.018,
+z*1.018
+
+);
 
 
-    dummy.lookAt(
-        x * 2,
-        y * 2,
-        z * 2
-    );
+dummy.lookAt(
+x*2,
+y*2,
+z*2
+);
 
 
-    dummy.updateMatrix();
+dummy.updateMatrix();
 
 
-    parcels.setMatrixAt(
-        i,
-        dummy.matrix
-    );
+parcels.setMatrixAt(
+i,
+dummy.matrix
+);
 
 
-    if(
-        premiumParcels.has(i + 1)
-    ){
+if(
+premium.has(i+1)
+){
 
-        color.set(
-            0xffd34d
-        );
+color.set(0xffd34d);
 
-    }
-    else if(
-        ownedParcels.has(i + 1)
-    ){
+}
 
-        color.set(
-            0x50e58a
-        );
+else if(
+owned.has(i+1)
+){
 
-    }
-    else{
+color.set(0x50e58a);
 
-        color.set(
-            0x35dcff
-        );
+}
 
-    }
+else{
 
+color.set(0x36dcff);
 
-    parcels.setColorAt(
-        i,
-        color
-    );
 }
 
 
-parcels.instanceMatrix.needsUpdate =
-    true;
+parcels.setColorAt(
+i,
+color
+);
 
-parcels.instanceColor.needsUpdate =
-    true;
+}
 
 
-/* =====================================
-   MOUSE / TOUCH
-===================================== */
+parcels.instanceMatrix.needsUpdate=true;
 
-let dragging =
-    false;
+parcels.instanceColor.needsUpdate=true;
 
-let lastX =
-    0;
 
-let lastY =
-    0;
+/* =========================
+   MOUSE
+========================= */
 
-let movement =
-    0;
+let dragging=false;
+
+let oldX=0;
+let oldY=0;
+
+let movement=0;
 
 
 renderer.domElement.addEventListener(
-    "pointerdown",
-    function(event){
 
-        dragging = true;
+"pointerdown",
 
-        lastX =
-            event.clientX;
+e=>{
 
-        lastY =
-            event.clientY;
+dragging=true;
 
-        movement = 0;
+oldX=e.clientX;
+oldY=e.clientY;
 
-    }
+movement=0;
+
+}
+
 );
 
 
 window.addEventListener(
-    "pointermove",
-    function(event){
 
-        if(!dragging)
-            return;
+"pointermove",
 
+e=>{
 
-        const dx =
-            event.clientX -
-            lastX;
+if(!dragging)
+return;
 
 
-        const dy =
-            event.clientY -
-            lastY;
+const dx=
+e.clientX-oldX;
+
+const dy=
+e.clientY-oldY;
 
 
-        earthGroup.rotation.y +=
-            dx * .005;
+world.rotation.y +=
+dx*.005;
 
 
-        earthGroup.rotation.x +=
-            dy * .003;
+world.rotation.x +=
+dy*.003;
 
 
-        earthGroup.rotation.x =
-            Math.max(
-                -1.3,
-                Math.min(
-                    1.3,
-                    earthGroup.rotation.x
-                )
-            );
+world.rotation.x=
+Math.max(
+-1.3,
+Math.min(
+1.3,
+world.rotation.x
+)
+);
 
 
-        lastX =
-            event.clientX;
-
-        lastY =
-            event.clientY;
+oldX=e.clientX;
+oldY=e.clientY;
 
 
-        movement +=
-            Math.abs(dx) +
-            Math.abs(dy);
+movement+=
+Math.abs(dx)+
+Math.abs(dy);
 
-    }
+}
+
 );
 
 
 window.addEventListener(
-    "pointerup",
-    function(){
 
-        dragging = false;
+"pointerup",
 
-    }
+()=>{
+
+dragging=false;
+
+}
+
 );
 
 
-/* =====================================
+/* =========================
    ZOOM
-===================================== */
+========================= */
 
 renderer.domElement.addEventListener(
-    "wheel",
-    function(event){
 
-        event.preventDefault();
+"wheel",
 
+e=>{
 
-        camera.position.z +=
-            event.deltaY * .0015;
+e.preventDefault();
 
 
-        camera.position.z =
-            Math.max(
-                1.55,
-                Math.min(
-                    5.5,
-                    camera.position.z
-                )
-            );
+camera.position.z +=
+e.deltaY*.0015;
 
-    },
-    {
-        passive:false
-    }
+
+camera.position.z=
+Math.max(
+1.5,
+Math.min(
+5.5,
+camera.position.z
+)
+);
+
+},
+
+{passive:false}
+
 );
 
 
-/* =====================================
-   PARSEL TIKLAMA
-===================================== */
+/* =========================
+   PARSEL SEÇME
+========================= */
 
-const raycaster =
-    new THREE.Raycaster();
+const raycaster=
+new THREE.Raycaster();
 
 
-const mouse =
-    new THREE.Vector2();
+const mouse=
+new THREE.Vector2();
 
 
 renderer.domElement.addEventListener(
-    "click",
-    function(event){
 
-        if(
-            movement > 8
-        )
-            return;
+"click",
 
+e=>{
 
-        mouse.x =
-            event.clientX /
-            window.innerWidth *
-            2 - 1;
+if(movement>8)
+return;
 
 
-        mouse.y =
-            -(
-                event.clientY /
-                window.innerHeight
-            ) * 2 + 1;
+mouse.x=
+e.clientX/
+window.innerWidth*
+2-1;
 
 
-        raycaster.setFromCamera(
-            mouse,
-            camera
-        );
+mouse.y=
+-(e.clientY/
+window.innerHeight)*
+2+1;
 
 
-        const hits =
-            raycaster.intersectObject(
-                parcels
-            );
-
-
-        if(
-            hits.length === 0
-        )
-            return;
-
-
-        const instanceId =
-            hits[0].instanceId;
-
-
-        if(
-            instanceId === undefined
-        )
-            return;
-
-
-        const id =
-            instanceId + 1;
-
-
-        showParcel(
-            id
-        );
-
-    }
+raycaster.setFromCamera(
+mouse,
+camera
 );
 
 
-/* =====================================
-   PARSEL BİLGİ
-===================================== */
-
-function showParcel(
-    id
-){
-
-    const title =
-        document.getElementById(
-            "parcelTitle"
-        );
+const hits=
+raycaster.intersectObject(
+parcels
+);
 
 
-    const description =
-        document.getElementById(
-            "parcelDescription"
-        );
+if(!hits.length)
+return;
 
 
-    title.textContent =
-        "Parsel #" + id;
+const id=
+hits[0].instanceId+1;
 
 
-    if(
-        premiumParcels.has(id)
-    ){
-
-        description.textContent =
-            "⭐ Bu premium parseldir.";
-
-    }
-    else if(
-        ownedParcels.has(id)
-    ){
-
-        description.textContent =
-            "🟢 Bu parsel şu anda sahipli.";
-
-    }
-    else{
-
-        description.textContent =
-            "🔵 Bu parsel müsait.";
-
-    }
+document
+.getElementById("parcelTitle")
+.textContent=
+"Parsel #"+id;
 
 
-    document
-        .getElementById(
-            "parcelCard"
-        )
-        .classList.add(
-            "active"
-        );
+let text;
+
+
+if(premium.has(id)){
+
+text=
+"⭐ Premium parsel.";
+
 }
+
+else if(owned.has(id)){
+
+text=
+"🟢 Bu parsel sahipli.";
+
+}
+
+else{
+
+text=
+"🔵 Bu parsel müsait.";
+
+}
+
+
+document
+.getElementById("parcelText")
+.textContent=
+text;
+
+
+document
+.getElementById("parcelCard")
+.classList.add(
+"show"
+);
+
+}
+
+);
 
 
 function closeParcel(){
 
-    document
-        .getElementById(
-            "parcelCard"
-        )
-        .classList.remove(
-            "active"
-        );
+document
+.getElementById("parcelCard")
+.classList.remove(
+"show"
+);
 
 }
 
 
-/* =====================================
-   EKRAN BOYUTU
-===================================== */
+/* =========================
+   EKRAN
+========================= */
 
 window.addEventListener(
-    "resize",
-    function(){
 
-        camera.aspect =
-            window.innerWidth /
-            window.innerHeight;
+"resize",
+
+()=>{
+
+camera.aspect=
+window.innerWidth/
+window.innerHeight;
+
+camera.updateProjectionMatrix();
 
 
-        camera.updateProjectionMatrix();
+renderer.setSize(
+window.innerWidth,
+window.innerHeight
+);
 
+}
 
-        renderer.setSize(
-            window.innerWidth,
-            window.innerHeight
-        );
-
-    }
 );
 
 
-/* =====================================
+/* =========================
    ANİMASYON
-===================================== */
+========================= */
 
 function animate(){
 
-    requestAnimationFrame(
-        animate
-    );
+requestAnimationFrame(
+animate
+);
 
 
-    renderer.render(
-        scene,
-        camera
-    );
+stars.rotation.y +=
+0.00008;
+
+
+renderer.render(
+scene,
+camera
+);
 
 }
 
